@@ -8,13 +8,9 @@ print( conn.status )
 print( conn.info )
 
 with conn.cursor() as cur:
-    cur.execute( 'select * from cnae limit 10' )
+    cur.execute( 'select to_json( x.* )  from ( select * from cnae limit 10 ) x ' )
     for record in cur:
-       print(record)
-       print( json.dumps( record ))
-       print( record[0])
-       cnae = { "codigo": record[0], "nome" : record[1] }
-       print( cnae )
+       print( json.loads( json.dumps( record )) )
 
 
 conn.close()
